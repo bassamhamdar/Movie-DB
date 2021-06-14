@@ -21,19 +21,29 @@ app.get('/time',(req,res)=>{
         message: `hello ${req.params.id}`
         })
     });
-    app.get('/search?s=:search',(req,res)=>{
+    app.get('/search',(req,res)=>{
+        const search = req.query.s
+        if(!search) res.send({status:500, error:true, message:"you have to provide a search"})
+        console.log(search)
         res.send({status : 200 ,
         message : 'ok',
-        data: `${req.params.search}`
+        data: search
         })
     });
 
-    app.get('/search?s=',(req,res)=>{
-        res.send({status : 500 ,
-        error : true,
-        data: 'you have to provide a search'
-        })
-    });
+    // app.get('/search?s=',(req,res)=>{
+    //     res.send({status : 500 ,
+    //     error : true,
+    //     data: 'you have to provide a search'
+    //     })
+    // });
+
+    // app.get('/search?s=',(req,res)=>{
+    //     res.send({status : 500 ,
+    //     error : true,
+    //     data: 'you have to provide a search'
+    //     })
+    // });
 
 
     // app.get('*',(req,res)=>{
@@ -48,21 +58,21 @@ app.get('/time',(req,res)=>{
 
 // step 5
 const movies = [
-    { title: 'Jaws', year: 1975, rating: 8 },
-    { title: 'Avatar', year: 2009, rating: 7.8 },
-    { title: 'Brazil', year: 1985, rating: 8 },
-    { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
+    { id: 1, title: 'Jaws', year: 1975, rating: 8 },
+    { id: 2, title: 'Avatar', year: 2009, rating: 7.8 },
+    { id: 3, title: 'Brazil', year: 1985, rating: 8 },
+    { id: 4, title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
 ]
 
 app.post('/movies/create', (req,res)=>{
     res.send('create');
 });
-// app.get('/movies/read', (req,res)=>{
-//     res.send({
-//         status:200,
-//         data: movies
-//     });
-// });
+app.get('/movies/read', (req,res)=>{
+    res.send({
+        status:200,
+        data: movies
+    });
+});
 app.put('/movies/update', (req,res)=>{
     res.send('update');
 });
@@ -101,3 +111,13 @@ app.get('/movies/read/by-title',(req,res)=>{
     })
 });
 
+// step 7
+
+app.get('/movies/read/id/:id', (req,res)=>{
+    const movie = movies.find(c => c.id === parseInt(req.params.id));
+    if(!movie) res.send({
+        status:404,
+        error: true,
+        message: `the movie ${res.params} does not exist`})
+    res.send({status:200, data: movie})
+});
