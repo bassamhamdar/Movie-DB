@@ -1,0 +1,25 @@
+{
+  "name": "movie-db",
+  "version": "1.0.0",
+  "description": "or CMDB for short",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bassamhamdar/Movie-DB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bassamhamdar/Movie-DB/issues"
+  },
+  "homepage": "https://github.com/bassamhamdar/Movie-DB#readme",
+  "dependencies": {
+    "dev": "^0.1.3",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
