@@ -57,16 +57,47 @@ const movies = [
 app.post('/movies/create', (req,res)=>{
     res.send('create');
 });
-app.get('/movies/read', (req,res)=>{
-    res.send({
-        status:200,
-        data: movies
-    });
-});
+// app.get('/movies/read', (req,res)=>{
+//     res.send({
+//         status:200,
+//         data: movies
+//     });
+// });
 app.put('/movies/update', (req,res)=>{
     res.send('update');
 });
 app.delete('/movies/delete', (req,res)=>{
     res.send('delete');
+});
+
+app.get('/movies/read/by-date',(req,res)=>{
+    res.send({
+        status:200,
+        data: movies.sort(function(a,b){
+            var dateA = new Date(a.year),dateB = new Date(b.year);
+            return dateA - dateB;
+        })
+    })
+});
+
+app.get('/movies/read/by-rating',(req,res)=>{
+    res.send({
+        status:200,
+        data: movies.sort(function(a,b){
+            return b.rating - a.rating;
+        })
+    })
+});
+
+app.get('/movies/read/by-title',(req,res)=>{
+    res.send({
+        status:200,
+        data: movies.sort(function(a,b){
+            var titleA = a.title,titleB = b.title;
+            if(titleA < titleB) return -1;
+            if(titleA > titleB) return 1;
+            return 0;
+        })
+    })
 });
 
