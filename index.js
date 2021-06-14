@@ -31,30 +31,6 @@ app.get('/time',(req,res)=>{
         })
     });
 
-    // app.get('/search?s=',(req,res)=>{
-    //     res.send({status : 500 ,
-    //     error : true,
-    //     data: 'you have to provide a search'
-    //     })
-    // });
-
-    // app.get('/search?s=',(req,res)=>{
-    //     res.send({status : 500 ,
-    //     error : true,
-    //     data: 'you have to provide a search'
-    //     })
-    // });
-
-
-    // app.get('*',(req,res)=>{
-    //         res.send({
-    //             status: 500,
-    //             error: true,
-    //             message: 'you have to provide a search'
-    //         })
-        
-
-    // });
 
 // step 5
 const movies = [
