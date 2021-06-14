@@ -89,11 +89,12 @@ app.get('/movies/read/by-title',(req,res)=>{
 
 // step 7
 
-app.get('/movies/read/id/:id', (req,res)=>{
+app.get('/movies/read/id/:id?', (req,res)=>{
+    
     const movie = movies.find(c => c.id === parseInt(req.params.id));
     if(!movie) res.send({
         status:404,
         error: true,
-        message: `the movie ${res.params} does not exist`})
+        message: `the movie ${req.params.id} does not exist`})
     res.send({status:200, data: movie})
 });
