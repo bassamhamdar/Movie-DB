@@ -24,7 +24,6 @@ app.get('/time',(req,res)=>{
     app.get('/search',(req,res)=>{
         const search = req.query.s
         if(!search) res.send({status:500, error:true, message:"you have to provide a search"})
-        console.log(search)
         res.send({status : 200 ,
         message : 'ok',
         data: search
@@ -98,3 +97,36 @@ app.get('/movies/read/id/:id?', (req,res)=>{
         message: `the movie ${req.params.id} does not exist`})
     res.send({status:200, data: movie})
 });
+
+// step 8
+
+app.get('/movies/add',(req,res)=>{
+    const title = req.query.title;
+    const year = parseInt(req.query.year);
+    const rating = req.query.rating;
+    const isYearNumber = (/^\d{4}$/).test(year);
+    if(title==='' || year==='' || isYearNumber == false ) res.send({status:403, error:true, message:'you cannot create a movie without providing a title and a year'});
+    else if(rating == ''){
+        movies.push({
+            title: title,
+            year: year,
+            rating: 4
+        })
+        res.send({
+            status:200,
+            data: movies
+        });
+    
+    }else{
+        movies.push({
+            title: title,
+            year: year,
+            rating: rating
+        })
+        res.send({
+            status:200,
+            data: movies
+        });
+
+    }
+})
