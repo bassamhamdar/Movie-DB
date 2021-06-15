@@ -48,12 +48,6 @@ app.get('/movies/read', (req,res)=>{
         data: movies
     });
 });
-app.put('/movies/update', (req,res)=>{
-    res.send('update');
-});
-app.delete('/movies/delete', (req,res)=>{
-    res.send('delete');
-});
 
 app.get('/movies/read/by-date',(req,res)=>{
     res.send({
@@ -89,8 +83,8 @@ app.get('/movies/read/by-title',(req,res)=>{
 // step 7
 
 app.get('/movies/read/id/:id?', (req,res)=>{
-    
-    const movie = movies.find(c => c.id === parseInt(req.params.id));
+    const id = parseInt(req.params.id);
+    const movie = movies[id-1];
     if(!movie) res.send({
         status:404,
         error: true,
@@ -143,4 +137,16 @@ app.get('/movies/delete/:id?',(req,res)=>{
     
 });
 
-// step 10s
+// step 10
+
+app.get('/movies/update/:id',(req,res)=>{
+    const id = parseInt(req.params.id);
+    const newTitle = req.query.title;
+    const newRating = req.query.rating;
+    const newYear = req.query.year;
+    const modifiedMovie = movies[id-1];
+    if(newTitle) modifiedMovie.title = newTitle;
+    if(newRating) modifiedMovie.rating = newRating;
+    if(newYear) modifiedMovie.year = newYear;
+    res.send(movies);
+});
