@@ -33,10 +33,10 @@ app.get('/time',(req,res)=>{
 
 // step 5
 const movies = [
-    { id: 1, title: 'Jaws', year: 1975, rating: 8 },
-    { id: 2, title: 'Avatar', year: 2009, rating: 7.8 },
-    { id: 3, title: 'Brazil', year: 1985, rating: 8 },
-    { id: 4, title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
+    { title: 'Jaws', year: 1975, rating: 8 },
+    { title: 'Avatar', year: 2009, rating: 7.8 },
+    { title: 'Brazil', year: 1985, rating: 8 },
+    { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
 ]
 
 app.post('/movies/create', (req,res)=>{
@@ -130,3 +130,17 @@ app.get('/movies/add',(req,res)=>{
 
     }
 })
+
+// step 9
+
+app.get('/movies/delete/:id?',(req,res)=>{
+    const id = parseInt(req.params.id);
+    if( id > movies.length || id <=0){ res.send({status:404, error:true, message:`the movie ${req.params.id} does not exist`});}
+    else{ const deletedMovie = movies.splice(id -1, 1);
+    console.log(deletedMovie);
+    res.send(movies);
+    }
+    
+});
+
+// step 10s
