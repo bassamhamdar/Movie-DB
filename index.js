@@ -39,9 +39,8 @@ const movies = [
     { title: 'الإرهاب والكباب‎', year: 1992, rating: 6.2 }
 ]
 
-app.post('/movies/create', (req,res)=>{
-    res.send('create');
-});
+
+
 app.get('/movies/read', (req,res)=>{
     res.send({
         status:200,
@@ -94,7 +93,7 @@ app.get('/movies/read/id/:id?', (req,res)=>{
 
 // step 8
 
-app.get('/movies/add',(req,res)=>{
+app.post('/movies/add',(req,res)=>{
     const title = req.query.title;
     const year = parseInt(req.query.year);
     const rating = req.query.rating;
@@ -127,7 +126,7 @@ app.get('/movies/add',(req,res)=>{
 
 // step 9
 
-app.get('/movies/delete/:id?',(req,res)=>{
+app.delete('/movies/delete/:id?',(req,res)=>{
     const id = parseInt(req.params.id);
     if( id > movies.length || id <=0){ res.send({status:404, error:true, message:`the movie ${req.params.id} does not exist`});}
     else{ const deletedMovie = movies.splice(id -1, 1);
@@ -139,7 +138,7 @@ app.get('/movies/delete/:id?',(req,res)=>{
 
 // step 10
 
-app.get('/movies/update/:id',(req,res)=>{
+app.put('/movies/update/:id',(req,res)=>{
     const id = parseInt(req.params.id);
     const newTitle = req.query.title;
     const newRating = req.query.rating;
