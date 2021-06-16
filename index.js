@@ -174,3 +174,91 @@ app.post('/movies/add',(req,res)=>{
     }).catch(err => console.log(err));
 });
 
+//step 13 ******************************************************
+
+//list of users
+const users = [{
+    username : 'bassam',
+    password : '123'
+},{
+    username : 'hamdar',
+    password : '321'
+},{
+    username : 'zero',
+    password : '0000'
+}];
+//Creat
+app.post('/username/password/addMovie',(req,res)=>{
+    const username = req.query.username;
+    const password = req.query.password;
+    const title = req.query.title;
+    const year = parseInt(req.query.year);
+    const rating = req.query.rating;
+    const isYearNumber = (/^\d{4}$/).test(year);
+
+    //check for user
+    const checkUsername = users.find(u=>u.username === username);
+    if(!checkUsername || checkUsername.password != password) res.send({message: "username or password does not exist"})
+    //check info
+    if(title==='' || year==='' || isYearNumber == false ) res.send({status:403, error:true, message:'you cannot create a movie without providing a title and a year'});
+    else{
+    
+        movies.push({
+            title: title,
+            year: year,
+            rating: rating
+        });
+        res.send(movies);
+    }
+});
+
+app.get('/username/password/readMovieList',(req,res)=>{
+    const username = req.query.username;
+    const password = req.query.password;
+    //check for user
+    const checkUsername = users.find(u=>u.username === username);
+    if(!checkUsername || checkUsername.password != password) res.send({message: "username or password does not exist"})
+    res.send(movies);
+ 
+});
+
+//update
+
+app.put('/username/password/editMovie/ID/:id',(req,res)=>{
+    const username = req.query.username;
+    const password = req.query.password;
+    const id = parseInt(req.params.id);
+    //check for user
+    const checkUsername = users.find(u=>u.username === username);
+    if(!checkUsername || checkUsername.password != password) res.send({message: "username or password does not exist"})
+    //check info
+    if( id > movies.length || id <=0){ res.send({status:404, error:true, message:`the movie ${id} does not exist`});}
+    const newTitle = req.query.title;
+    const newRating = req.query.rating;
+    const newYear = req.query.year;
+    const modifiedMovie = movies[id-1];
+    if(newTitle) modifiedMovie.title = newTitle;
+    if(newRating) modifiedMovie.rating = newRating;
+    if(newYear) modifiedMovie.year = newYear;
+    res.send(movies);
+
+
+});
+
+// delete
+
+app.delete('/username/password/deleteMovie/ID/:id',(req,res)=>{
+    const username = req.query.username;
+    const password = req.query.password;
+    //check for user
+    const checkUsername = users.find(u=>u.username === username);
+    if(!checkUsername || checkUsername.password != password) res.send({message: "username or password does not exist"})
+
+    const id = parseInt(req.params.id);
+    if( id > movies.length || id <=0){ res.send({status:404, error:true, message:`the movie ${id} does not exist`});}
+    else{ const deletedMovie = movies.splice(id -1, 1);
+    console.log(deletedMovie);
+    res.send(movies);
+    }
+    
+});
