@@ -149,3 +149,28 @@ app.put('/movies/update/:id',(req,res)=>{
     if(newYear) modifiedMovie.year = newYear;
     res.send(movies);
 });
+// step 11
+
+//connect to DB
+var mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://bassam:1234@cluster0.wmvv4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',{
+    useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+//
+
+const Movie = require("./movies");
+
+app.post('/movies/add',(req,res)=>{
+
+    const movie = new Movie({
+        id: mongoose.Types.ObjectId(),
+        title: req.query.title,
+        year: req.query.year,
+        rating: req.query.rating
+    });
+    movie.save().then(result => {
+        console.log(result)
+    }).catch(err => console.log(err));
+});
+
